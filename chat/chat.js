@@ -41,7 +41,7 @@ function getStateOfChat(){
 //Updates the chat
 function updateChat(){
 	 if(!instanse){
-		
+		//alert("hi");
 		 instanse = true;
 	     $.ajax({
 			   type: "POST",

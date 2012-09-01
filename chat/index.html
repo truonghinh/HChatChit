@@ -1,0 +1,631 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Chat With GOneGIS</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+	<link rel="shortcut icon" href="images/icon.png" type="image/x-icon"/>
+  <!-- CSS: implied media=all -->
+  <!-- CSS concatenated and minified via ant build script-->
+  
+  <!--<link rel="stylesheet" href="css/style_main.css">-->
+  <link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="stylesheet" href="css/style_avatar.css" type="text/css" media="screen"/>
+	
+	<style>
+	a.back{
+                background:transparent url(back.png) no-repeat top left;
+                position:fixed;
+                width:150px;
+                height:27px;
+                outline:none;
+                bottom:0px;
+                left:0px;
+            }
+			/* login*/
+			.btn-sign {
+	width:460px;
+	margin-bottom:20px;
+	margin:0 auto;
+	padding:20px;
+	border-radius:5px;
+	background: -moz-linear-gradient(center top, #00c6ff, #018eb6);
+    background: -webkit-gradient(linear, left top, left bottom, from(#00c6ff), to(#018eb6));
+	background:  -o-linear-gradient(top, #00c6ff, #018eb6);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#00c6ff', EndColorStr='#018eb6');
+	text-align:center;
+	font-size:36px;
+	color:#fff;
+	text-transform:uppercase;
+}
+
+.btn-sign a { color:#fff; text-shadow:0 1px 2px #161616; }
+
+#mask {
+	display: none;
+	background: #000; 
+	position: fixed; left: 0; top: 0; 
+	z-index: 10;
+	width: 100%; height: 100%;
+	opacity: 0.8;
+	z-index: 999;
+}
+
+.login-popup{
+	display:none;
+	background: #333;
+	padding: 10px; 	
+	border: 2px solid #ddd;
+	float: left;
+	font-size: 1.2em;
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 99999;
+	box-shadow: 0px 0px 20px #999;
+	-moz-box-shadow: 0px 0px 20px #999; /* Firefox */
+    -webkit-box-shadow: 0px 0px 20px #999; /* Safari, Chrome */
+	border-radius:3px 3px 3px 3px;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari, Chrome */
+}
+
+img.btn_close {
+	float: right; 
+	margin: -28px -28px 0 0;
+}
+
+fieldset { 
+	border:none; 
+}
+
+form.signin .textbox label { 
+	display:block; 
+	padding-bottom:7px; 
+}
+
+form.signin .textbox span { 
+	display:block;
+}
+
+form.signin p, form.signin span { 
+	color:#999; 
+	font-size:11px; 
+	line-height:18px;
+} 
+
+form.signin .textbox input { 
+	background:#666666; 
+	border-bottom:1px solid #333;
+	border-left:1px solid #000;
+	border-right:1px solid #333;
+	border-top:1px solid #000;
+	color:#fff; 
+	border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	font:13px Arial, Helvetica, sans-serif;
+	padding:6px 6px 4px;
+	width:200px;
+}
+
+form.signin input:-moz-placeholder { color:#bbb; text-shadow:0 0 2px #000; }
+form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #000;  }
+
+.button { 
+	background: -moz-linear-gradient(center top, #f3f3f3, #dddddd);
+	background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#dddddd));
+	background:  -o-linear-gradient(top, #f3f3f3, #dddddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3', EndColorStr='#dddddd');
+	border-color:#000; 
+	border-width:1px;
+	border-radius:4px 4px 4px 4px;
+	-moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+	color:#333;
+	cursor:pointer;
+	/*display:inline-block;*/
+	display:block;
+	padding:6px 6px 4px;
+	margin-top:10px;
+	font:12px; 
+	width:214px;
+}
+
+.button:hover { background:#ddd; }
+
+	</style>
+  <!-- end CSS-->
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  <!-- All JavaScript at the bottom, except for Modernizr / Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+       <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+	
+	
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+	<script type="text/javascript" src="jquery.faviconNotify.js"></script>
+	<script type="text/javascript" src="smilies.js"></script>
+    <script type="text/javascript" src="chat.js"></script>
+	<script type="text/javascript" src="utf8.js"></script>
+	<script type="text/javascript" src="jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/mylibs/userManager.js"></script>
+  <!--<script src="js/libs/modernizr-2.0.6.min.js"></script>-->
+  <script type="text/javascript">
+		$(document).ready(function() {
+	//$('a.login-window').click(function() {
+		
+		// Getting the variable's value from a link 
+		//var loginBox = $(this).attr('href');
+
+		//Fade in the Popup and add close button
+		$('#login-box').fadeIn(300);
+		
+		//Set the center alignment padding + border
+		var popMargTop = ($('#login-box').height() + 24) / 2; 
+		var popMargLeft = ($('#login-box').width() + 24) / 2; 
+		
+		$('#login-box').css({ 
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		// Add the mask to body
+		$('body').append('<div id="mask"></div>');
+		$('#mask').fadeIn(300);
+		
+		//return false;
+	//});
+	
+	// When clicking on the button close or the mask layer the popup closed
+	$('a.close, #mask').live('click', function() { 
+	  $('#mask , .login-popup').fadeOut(300 , function() {
+		$('#mask').remove();  
+	}); 
+	return false;
+	});
+});
+        // ask user for name with popup prompt    
+        var name = "";//prompt("Enter your chat name:", "No name");
+        
+        // default name is 'Guest'
+    	if (!name || name === ' ') {
+    	   name = "No name";	
+    	}
+    	
+    	// strip tags
+    	name = name.replace(/(<([^>]+)>)/ig,"");
+    	
+    	// display name on page
+    	$("#name-area").html("You are: <span>" + name + "</span>");
+    	function addUser(user_name)
+            {
+            	$('#members').append('<div class="item user" ><img src="images/bg_user.png" alt="" width="199" height="199" class="circle"/><a href="#" class="icon"></a><h2>'+user_name+'</h2><ul><li><a href="#">Profile</a></li><li><a href="#">Properties</a></li><li><a href="#">Privacy</a></li></ul></div>');
+            		rePositionGuest();
+					rePositionMember();
+            }
+            //
+    	// kick off chat
+        var chat =  new Chat();
+		var userMan=new UserManager();
+    	$(function() {
+			//userMan.insert(name,"123456");
+			//login_popup();
+			rePositionGuest();
+			rePositionMember();
+			addUser(name);
+    		 chat.getState(); 
+			 //alert($("*:focus").attr("id"));
+    		 
+    		 // watch textarea for key presses
+             $("#sendie").keydown(function(event) {  
+             
+                 var key = event.which;  
+           
+                 //all keys including return.  
+                 if (key >= 33) {
+                   
+                     var maxLength = $(this).attr("maxlength");  
+                     var length = this.value.length;  
+                     
+                     // don't allow new content if length is maxed out
+                     if (length >= maxLength) {  
+                         event.preventDefault();  
+                     }  
+                  }  
+    		 																																																});
+    		 // watch textarea for release of key press
+    		 $('#sendie').keyup(function(e) {	
+    		 					 
+    			  if (e.keyCode == 13) { 
+					$.faviconNotify('images/icon.png');
+                    $('#sendButton').trigger('click');
+    				
+    				
+    			  }
+             });
+			 $('#sendButton').click(function(e){
+			 
+				var text = $('#sendie').val();
+    				var maxLength = $('#sendie').attr("maxlength");  
+                    var length = text.length; 
+
+                    // send 
+                    if((length <= maxLength + 1)&(length>0)) { 
+                     
+    			        chat.send(text, name);	
+    			        $('#sendie').val("");
+    			        
+                    } else {
+                    
+    					$('#sendie').val(text.substring(0, maxLength));
+    					
+    				}	
+			 });
+            
+			
+    	});
+    </script>
+	<script type="text/javascript">
+			 function on(t)
+			 {
+			  sendie.value+=t;
+			 }
+			var curTopGuest=70;
+			var curTopMember=70;
+            $(function() {
+			
+                $('.user_avatars > div').live('mouseover',
+                function () {
+                    var $this = $(this);
+                    $this.find('img').stop().animate({
+                        'width'     :'199px',
+                        'height'    :'199px',
+                        'top'       :'-25px',
+                        'left'      :'-25px',
+                        'opacity'   :'1.0'
+                    },500,'easeOutBack',function(){
+                        $(this).parent().find('ul').fadeIn(700);
+                    });
+
+                    $this.find('a:first,h2').addClass('active');
+                }).live('mouseout',
+                function () {
+                    var $this = $(this);
+                    $this.find('ul').fadeOut(700);
+                    $this.find('img').stop().animate({
+                        'width'     :'52px',
+                        'height'    :'52px',
+                        'top'       :'0px',
+                        'left'      :'0px',
+                        'opacity'   :'0.1'
+                    },500,'easeOutBack');
+
+                    $this.find('a:first,h2').removeClass('active');
+                }
+            );
+            $('#add').click(function(e){
+            		addUser(name);
+            		
+            });
+            //--------------------
+			
+            
+            });
+			
+			function login_popup()
+			{
+				//login
+            var loginBox = $(this).attr('href');
+
+		//Fade in the Popup and add close button
+		$(loginBox).fadeIn(300);
+		
+		//Set the center alignment padding + border
+		var popMargTop = ($(loginBox).height() + 24) / 2; 
+		var popMargLeft = ($(loginBox).width() + 24) / 2; 
+		
+		$(loginBox).css({ 
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		// Add the mask to body
+		$('body').append('<div id="mask"></div>');
+		$('#mask').fadeIn(300);
+		
+		//-------end login
+		return false;
+			}
+			
+			function rePositionGuest()
+			{
+				var len =$('#guest').children().length;
+				//alert(len);
+				var j=1;
+				for(var i=len;i>1;i=i-3)
+				{
+					
+					var k;
+						curTopGuest=70*parseInt((i-1)/3)+10;
+						$('#guest>.item:nth-child('+j+')').css('top', curTopGuest);
+						$('#guest>.item:nth-child('+j+')').css('left', 50+getLeftParam(j)*70);
+						if(j+1<=len)
+						{
+							k=j+1;
+							$('#guest>.item:nth-child('+k+')').css('top', curTopGuest);
+							$('#guest>.item:nth-child('+k+')').css('left', 50+getLeftParam(j+1)*70);
+
+							//alert($('#guest>.item:nth-child('+k+')').css('left'));
+						}
+						if(j+2<=len)
+						{
+							k=j+2;
+							$('#guest>.item:nth-child('+k+')').css('top', curTopGuest);
+							$('#guest>.item:nth-child('+k+')').css('left', 50+getLeftParam(j+2)*70);
+						}
+						j=j+3;
+					//alert($('#guest>.item:nth-child('+i+')').css('top'));
+				}
+			}
+			
+			function rePositionMember()
+			{
+				var len =$('#members').children().length;
+				
+				var j=1;
+				for(var i=len;i>1;i=i-3)
+				{
+					//alert($('#members>.item:nth-child('+i+')').css('top'));
+					var k;
+						curTopMember=70*parseInt((i-1)/3)+10;
+						$('#members>.item:nth-child('+j+')').css('top', curTopMember);
+						$('#members>.item:nth-child('+j+')').css('left', 50+getLeftParam(j)*70);
+						if(j+1<=len)
+						{
+							k=j+1;
+							$('#members>.item:nth-child('+k+')').css('top', curTopMember);
+							$('#members>.item:nth-child('+k+')').css('left', 50+getLeftParam(j+1)*70);
+
+							//alert($('#members>.item:nth-child('+k+')').css('right'));
+						}
+						if(j+2<=len)
+						{
+							k=j+2;
+							$('#members>.item:nth-child('+k+')').css('top', curTopMember);
+							$('#members>.item:nth-child('+k+')').css('left', 50+getLeftParam(j+2)*70);
+						}
+						j=j+3;
+					//alert($('#members>.item:nth-child('+i+')').css('top'));
+				}
+			}
+			
+			function getLeftParam(heso)
+			{
+				var k;
+				if(heso%3==0)
+					{
+						k=2;
+					}
+					else if(heso%3==1)
+					{
+						k=0
+					}
+					else if(heso%3==2)
+					{
+						k=1;
+					}
+				return k;
+			}
+			function signin()
+			{
+				var username=$('#username').val();
+				var pass=$('#password').val();
+				userMan.check(username,pass);
+			}
+			function signup()
+			{
+				var username=$('#username').val();
+				var pass=$('#password').val();
+				userMan.insert(username,pass);
+			}
+        </script>
+</head>
+
+<body onload="setInterval('chat.update()', 1000)">
+	<div id="page-wrap">
+		
+        <h2>Say something ...</h2>
+        
+        <p id="name-area"></p>
+        
+        <div id="chat-wrap"><div id="chat-area"></div></div>
+		<div style="overflow-x:scroll; height:'55px' width:'200px'; background-color:#ffffff">
+			<div style="width:350%;">
+				<img class="x" align='absmiddle' src='smilies/38.gif' title=':D' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/52.gif' title=':)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/50.gif' title=':P' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/24.gif' title='=))' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/53.gif' title=';)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/48.gif' title=':(' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/33.gif' title='X(' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/40.gif' title=':xD' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/47.gif' title=':*' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/35.gif' title=':-@' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/55.gif' title='8-)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/49.gif' title=':((' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/1.gif' title=':-S' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/11.gif' title=':-$' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/5.gif' title=':-|' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/56.gif' title=':-#' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/39.gif' title='(H)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/32.gif' title=':o)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/54.gif' title='(2)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/12.gif' title=':-O' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/41.gif' title='(@' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/2.gif' title='(cgtr)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/19.gif' title='(ea)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/46.gif' title='(ea1)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/4.gif' title='(k)' onClick="on(this.title)"/>
+				<img class="x" align='absmiddle' src='smilies/30.gif' title='(s)' onClick="on(this.title)"/>
+			</div>
+		</div>
+        <form id="send-message-area">
+            <p>Your message: </p>
+            <textarea autofocus="autofocus" id="sendie" maxlength = '100' onClick="$.faviconNotify('images/icon.png');"></textarea>
+			<!--<button id="sendButton" onClick="chat.send('hi', 'tui');">Send</button>-->
+			<div id="sendButton" class="btn orange" width='30px' height='30px'>Send</div>
+			<div id="add">Add</div>
+        </form>
+		
+		
+    
+    </div>
+	
+	
+
+		<div class="user_avatars" id="guest">
+			<div class="item user" >
+				<img src="images/bg_user.png" alt="" width="199" height="199" class="circle"/>
+				<a href="#" class="icon"></a>
+				<h2>Thu</h2>
+				<ul>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Sent mesage</a></li>
+					<li><a href="#">Add to chat group</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="user_avatars" id="members">
+			<div class="item user" >
+				<img src="images/bg_user.png" alt="" width="199" height="199" class="circle"/>
+				<a href="#" class="icon"></a>
+				<h2>Thu heo</h2>
+				<ul>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Sent mesage</a></li>
+					<li><a href="#">Add to chat group</a></li>
+				</ul>
+			</div>
+		</div>
+
+
+		
+			<!--<div class="item user hinh" >
+				<img src="images/bg_home.png" alt="" width="199" height="199" class="circle"/>
+				<a href="#" class="icon"></a>
+				<h2>Hinh</h2>
+				<ul>
+					<li><a href="#">Portfolio</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>-->
+	<div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+          <form method="post" class="signin" action="#" style="display:inline-block;">
+                <fieldset class="textbox">
+            	<label class="username">
+                <span>Username or email</span>
+                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="Username">
+                </label>
+                
+                <label class="password">
+                <span>Password</span>
+                <input id="password" name="password" value="" type="password" placeholder="Password">
+                </label>
+                
+                <button class="submit button" type="button" onClick="signin();">Sign in</button>
+				
+                <button class="submit button" type="button" onClick="signup();">Sign up</button>
+                <p>
+                <a class="forgot" href="#">Forgot your password?</a>
+                </p>
+                
+                </fieldset>
+          </form>
+		  
+		  <form method="post" class="signin" action="#" style="display:inline-block;margin-left:50px;">
+                <fieldset class="textbox">
+            	<label class="username">
+                <span>Username or email</span>
+                <input id="username_mem" name="username" value="" type="text" autocomplete="on" placeholder="Username">
+                </label>
+                
+                <label class="password">
+                <span>Password</span>
+                <input id="password_mem" name="password" value="" type="password" placeholder="Password">
+                </label>
+                
+                <button class="submit button" type="button" onClick="signin();">Sign in</button>
+				
+                <button class="submit button" type="button" onClick="signup();">Sign up</button>
+                <p>
+                <a class="forgot" href="#">Forgot your password?</a>
+                </p>
+                
+                </fieldset>
+          </form>
+		</div>
+		
+  <div id="container">
+    <header>
+
+    </header>
+    <div id="main" role="main">
+		
+    </div>
+    <footer>
+
+    </footer>
+  </div> <!--! end of #container -->
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+
+  <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="js/plugins.js"></script>
+  <script defer src="js/script.js"></script>
+  <!-- end scripts-->
+
+	
+  <!-- Change UA-XXXXX-X to be your site's ID -->
+  <script>
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+</body>
+</html>

@@ -1,7 +1,7 @@
 <?php
 $q=$_GET["q"];
 
-$con = mysql_connect('localhost', 'gonegis', 'hinhthu071587@123');
+$con = mysql_connect('localhost', 'root', 'abc123');
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
@@ -9,7 +9,7 @@ if (!$con)
 
 mysql_select_db("gonegis_chat_users", $con);
 
-$sql="SELECT * FROM users WHERE id = '".$q."'";
+$sql="SELECT * FROM users";
 
 $result = mysql_query($sql);
 

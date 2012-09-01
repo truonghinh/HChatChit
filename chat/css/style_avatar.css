@@ -1,21 +1,35 @@
-.navigation{
-	
-    margin: 0px auto;
+.user_avatars{
+
     font-family: "Trebuchet MS", sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: bold;
     letter-spacing: 1.4px;
+	height:500px;
+	width:400px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	
 }
-.navigation .item{
-    position:absolute;
+#guest{
+	margin-top: -565px;
+	left:50px;
+}
+
+#members{
+	margin-top: -500px;
+	margin-left:930px;
+}
+
+.user_avatars .item{
+    position:relative;
 	
 	/*top:125px;
     left:110px;*/
 }
 .user{
-    top:125px;
-    left:110px;
+    top:10px;
+    left:50px;
 	
 }
 .home{
@@ -57,7 +71,7 @@ a.icon{
 .fav a.icon{
     background:transparent url(../images/fav.png) no-repeat 0px 0px;
 }
-.navigation .item a.active{
+.user_avatars .item a.active{
     background-position:0px -52px;
 }
 .item img.circle{
